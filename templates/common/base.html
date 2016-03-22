@@ -1,0 +1,18 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{% block page_title %} Quora {% endblock %}</title>
+        <link rel="stylesheet" href="{% static "common/css/base.css" %}" >
+        {% block extra_head %}{% endblock %}
+    </head>
+    <body>
+        <header>
+            {% block body_header %}{% endblock %}
+        </header>
+        <main>
+            {% block body_main %}{% endblock %}
+        </main>
+    </body>
+</html>

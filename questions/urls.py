@@ -3,5 +3,5 @@ from .views import *
 
 
 urlpatterns = [
-    url(r'^create_ques/$' , create_ques),
+    
 ]
