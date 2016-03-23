@@ -2,5 +2,8 @@
 {% block page_title %} all questions {% endblock %}
 {% block body_main %}
 <ul>
-    
+    {% for q in questions %}
+    <li>{{ q.title }} </li>
+    {% endfor %}
 </ul>
+{% endblock %}
