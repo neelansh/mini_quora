@@ -21,5 +21,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^questions/' , include("questions.urls")),
     url(r'^users/' , include("users.urls")),
-    
+    url(r'^$' , login , name = "login")
 ]

@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from .forms import login_form
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.contrib.auth import logout as auth_logout, login as auth_login , authenticate
 
 # Create your views here.
 @require_http_methods([ "GET" , "POST"])
@@ -17,7 +18,7 @@ def login(request):
 	else:
 		f = login_form(request.POST)
 		if(f.is_valid()):
-			user = f.authenticated_user
+			user = authenticate(username = f.cleaned_data["username"] , password = f.cleaned_data["password"])
 			auth_login(request , user)
 			return redirect("/users/")
 		else:
@@ -27,4 +28,11 @@ def login(request):
 @require_GET
 @login_required
 def home(request):
-	return redirect("/questions/all")
+	context = {"user" : request.user.username}
+	return render(request , "users/home_template.html" , context)
+
+@require_GET
+@login_required
+def logout(request):
+	auth_logout(request)
+	return render(request , "users/logout.html")
