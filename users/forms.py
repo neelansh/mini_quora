@@ -19,3 +19,25 @@ class login_form(forms.Form):
 			raise forms.ValidationError("username and password does not match")
 		return self.cleaned_data
 			
+class signup_form(forms.ModelForm):
+	password = forms.CharField(label = "Password" , widget = forms.PasswordInput)
+	confirm_password = forms.CharField(label = "Conform Password" , widget = forms.PasswordInput)
+
+	def clean_email(self):
+		data_email = self.cleaned_data.get("email" , "")
+		if(not data_email):
+			raise forms.ValidationError("this field is required")
+		if(MyUser.objects.filter(email = data_email).exists()):
+			raise forms.ValidationError("email alreaady exists")
+		return data_email
+
+	def clean_confirm_password(self):
+		password = self.cleaned_data.get("password" , "")
+		confirm_password = self.cleaned_data.get("confirm_password" , "")
+		if(password and confirm_password and not password == confirm_password):
+			raise forms.ValidationError("passwords doesn't match")
+		return confirm_password
+
+	class Meta:
+		model = MyUser
+		fields = ["username" ,"email" , "first_name" , "last_name"]
